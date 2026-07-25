@@ -6,6 +6,9 @@ import AccidentAlert from "./components/AccidentAlert";
 import EmergencyDashboard from "./components/EmergencyDashboard";
 import Login from "./components/Login";
 import MapView from "./components/MapView";
+import SOSButton from "./components/SOSButton";
+import AccidentDetection from "./components/AccidentDetection";
+
 function App() {
   return (
     <>
@@ -24,6 +27,10 @@ function App() {
       <Login />
 
       <MapView />
+
+      <SOSButton />
+
+      <AccidentDetection />
     </>
   );
 }

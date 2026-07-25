@@ -22,6 +22,9 @@ const route = [
 
 function MapView() {
   const [position, setPosition] = useState(route[0]);
+  const [speed] = useState(46);
+  const [fuel] = useState(74);
+  const [battery] = useState(92);
 
   useEffect(() => {
     let index = 0;
@@ -40,37 +43,71 @@ function MapView() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2 style={{ textAlign: "center" }}>
-        📍 GuardianX AI - Live Vehicle Tracking
-      </h2>
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        padding: "20px",
+        flexWrap: "wrap",
+      }}
+    >
+      <div style={{ flex: 2, minWidth: "600px" }}>
+        <h2>📍 GuardianX AI Live Tracking</h2>
 
-      <MapContainer
-        center={route[0]}
-        zoom={14}
+        <MapContainer
+          center={route[0]}
+          zoom={14}
+          style={{
+            height: "500px",
+            width: "100%",
+            borderRadius: "10px",
+          }}
+        >
+          <TileLayer
+            attribution="&copy; OpenStreetMap contributors"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+
+          <Marker position={position} icon={icon}>
+            <Popup>
+              🚗 UP25 AB 4589
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+
+      <div
         style={{
-          height: "500px",
-          width: "100%",
+          flex: 1,
+          minWidth: "280px",
+          background: "#1e293b",
+          color: "white",
+          padding: "20px",
           borderRadius: "10px",
         }}
       >
-        <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <h2>🚗 Vehicle Details</h2>
 
-        <Marker position={position} icon={icon}>
-          <Popup>
-            🚗 Vehicle No: UP25 AB 4589
-            <br />
-            👤 Driver: Pradeep Kumar
-            <br />
-            ⚡ Speed: 46 km/h
-            <br />
-            🟢 Status: Running
-          </Popup>
-        </Marker>
-      </MapContainer>
+        <hr />
+
+        <p><b>Vehicle:</b> UP25 AB 4589</p>
+
+        <p><b>Driver:</b> Pradeep Kumar</p>
+
+        <p><b>Location:</b> Bareilly</p>
+
+        <p><b>Speed:</b> {speed} km/h</p>
+
+        <p><b>Fuel:</b> {fuel}%</p>
+
+        <p><b>Battery:</b> {battery}%</p>
+
+        <p><b>GPS:</b> 🟢 Connected</p>
+
+        <p><b>Status:</b> 🟢 Running</p>
+
+        <p><b>Route:</b> Bareilly → Delhi</p>
+      </div>
     </div>
   );
 }
