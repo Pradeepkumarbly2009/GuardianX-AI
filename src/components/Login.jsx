@@ -1,38 +1,32 @@
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import AdminDashboard from "./AdminDashboard";
 import DriverDashboard from "./DriverDashboard";
 
 function Login() {
   const [role, setRole] = useState("Admin");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (
-      role === "Admin" &&
-      username === "admin" &&
-      password === "1234"
-    ) {
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
       setLoggedIn(true);
       setError("");
-    } else if (
-      role === "Driver" &&
-      username === "driver" &&
-      password === "1234"
-    ) {
-      setLoggedIn(true);
-      setError("");
-    } else {
-      setError("❌ Wrong Username or Password");
+    } catch (err) {
+      setError("❌ " + err.message);
     }
   };
 
   if (loggedIn) {
-    return role === "Admin"
-      ? <AdminDashboard />
-      : <DriverDashboard />;
+    return role === "Admin" ? (
+      <AdminDashboard />
+    ) : (
+      <DriverDashboard />
+    );
   }
 
   return (
@@ -47,24 +41,23 @@ function Login() {
     >
       <h2>🔐 GuardianX Login</h2>
 
-      <select
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-      >
+      <select value={role} onChange={(e) => setRole(e.target.value)}>
         <option>Admin</option>
         <option>Driver</option>
       </select>
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
         type="password"
@@ -73,17 +66,14 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <button onClick={handleLogin}>
         Login as {role}
       </button>
 
-      {error && (
-        <p style={{ color: "red" }}>
-          {error}
-        </p>
-      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

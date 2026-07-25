@@ -6,21 +6,38 @@ function AdminDashboard() {
         color: "white",
         padding: "40px",
         margin: "20px",
-        textAlign: "center",
-        borderRadius: "10px",
+        borderRadius: "12px",
       }}
     >
-      <h1>🛡️ Admin Dashboard</h1>
+      <h1 style={{ textAlign: "center" }}>
+        🛡️ GuardianX AI Admin Dashboard
+      </h1>
 
-      <p>🚨 Accident Monitoring: Active</p>
+      <hr />
 
-      <p>🚑 Ambulance Network: Connected</p>
+      <h2>📊 System Status</h2>
 
-      <p>👮 Police Alert System: Online</p>
+      <p>🟢 Accident Monitoring : Active</p>
+      <p>🟢 Ambulance Network : Connected</p>
+      <p>🟢 Police Alert System : Online</p>
+      <p>🟢 GPS Tracking : Active</p>
 
-      <p>🚗 Total Vehicles: 125</p>
+      <hr />
 
-      <p>📊 Accident Reports: 24</p>
+      <h2>📈 Live Statistics</h2>
+
+      <p>🚗 Total Vehicles : 125</p>
+      <p>👨 Drivers Online : 48</p>
+      <p>🚨 Today's Accidents : 2</p>
+      <p>📋 Total Accident Reports : 24</p>
+
+      <hr />
+
+      <h2>⚡ Emergency Status</h2>
+
+      <p>🚑 Ambulances Available : 18</p>
+      <p>👮 Police Units Available : 12</p>
+      <p>🏥 Nearby Hospitals : 9</p>
     </div>
   );
 }

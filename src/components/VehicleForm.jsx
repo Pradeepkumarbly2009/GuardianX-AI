@@ -1,4 +1,12 @@
+import { useState } from "react";
+
 function VehicleForm() {
+  const [message, setMessage] = useState("");
+
+  const handleRegister = () => {
+    setMessage("✅ Vehicle Registered Successfully!");
+  };
+
   return (
     <div
       style={{
@@ -6,6 +14,8 @@ function VehicleForm() {
         color: "white",
         padding: "40px",
         textAlign: "center",
+        borderRadius: "10px",
+        margin: "20px",
       }}
     >
       <h2>🚗 Vehicle Registration</h2>
@@ -28,7 +38,23 @@ function VehicleForm() {
 
       <input
         type="text"
+        placeholder="Driver Name"
+        style={{ width: "300px", padding: "10px", margin: "10px" }}
+      />
+
+      <br />
+
+      <input
+        type="text"
         placeholder="Phone Number"
+        style={{ width: "300px", padding: "10px", margin: "10px" }}
+      />
+
+      <br />
+
+      <input
+        type="text"
+        placeholder="Blood Group"
         style={{ width: "300px", padding: "10px", margin: "10px" }}
       />
 
@@ -43,6 +69,7 @@ function VehicleForm() {
       <br />
 
       <button
+        onClick={handleRegister}
         style={{
           padding: "12px 25px",
           background: "#2563eb",
@@ -50,10 +77,23 @@ function VehicleForm() {
           border: "none",
           borderRadius: "8px",
           marginTop: "15px",
+          cursor: "pointer",
         }}
       >
         Register Vehicle
       </button>
+
+      {message && (
+        <p
+          style={{
+            color: "#22c55e",
+            marginTop: "20px",
+            fontWeight: "bold",
+          }}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 }
