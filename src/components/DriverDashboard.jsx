@@ -1,4 +1,21 @@
-function DriverDashboard() {
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
+
+function DriverDashboard() {const updateStatus = async (status) => {
+  try {
+    await updateDoc(
+      doc(db, "Vehicles", "AZYGERgUeQyMOEVZKOG2"),
+      {
+        Status: status,
+      }
+    );
+
+    alert("Vehicle Status Updated Successfully");
+  } catch (error) {
+    console.log(error);
+    alert("Update Failed");
+  }
+};
   return (
     <div
       style={{
@@ -25,20 +42,22 @@ function DriverDashboard() {
       <hr />
 
       <button
-        style={{
-          margin: "10px",
-          padding: "12px 25px",
-          background: "#22c55e",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-        }}
-      >
-        ▶️ Start Trip
-      </button>
+  onClick={() => updateStatus("Running")}
+  style={{
+    margin: "10px",
+    padding: "12px 25px",
+    background: "#22c55e",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  }}
+>
+  ▶️ Start Trip
+</button>
 
       <button
+      onClick={() => updateStatus("Parked")}
         style={{
           margin: "10px",
           padding: "12px 25px",
@@ -53,6 +72,7 @@ function DriverDashboard() {
       </button>
 
       <button
+      onClick={() => updateStatus("Emergency")}
         style={{
           margin: "10px",
           padding: "12px 25px",

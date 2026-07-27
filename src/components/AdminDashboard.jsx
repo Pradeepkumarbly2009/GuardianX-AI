@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebae/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
-
 function AdminDashboard() {
   const [vehicles, setVehicles] = useState([]);
 
 useEffect(() => {
-  const fetchVehicles = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "vehicles"));
-
+  const unsubscribe = onSnapshot(
+    collection(db, "Vehicles"),
+    (querySnapshot) => {
       const list = [];
 
       querySnapshot.forEach((doc) => {
@@ -20,54 +18,23 @@ useEffect(() => {
       });
 
       setVehicles(list);
-    } catch (error) {
-      console.log(error);
     }
-  };
+  );
 
-  fetchVehicles();
+  return () => unsubscribe();
 }, []);
 
-  const runningVehicles = [
-    {
-      number: "UP25 AB 4589",
-      driver: "Pradeep",
-      speed: "46 km/h",
-      location: "Bareilly",
-    },
-    {
-      number: "UP32 CD 1289",
-      driver: "Rahul",
-      speed: "52 km/h",
-      location: "Delhi Road",
-    },
-  ];
+ const runningVehicles = vehicles.filter(
+  (v) => v.Status === "Running"
+);
 
+const parkedVehicles = vehicles.filter(
+  (v) => v.Status === "Parked"
+);
 
-  const parkedVehicles = [
-    {
-      number: "UP14 XY 7788",
-      driver: "Amit",
-      speed: "0 km/h",
-      location: "Parking Area",
-    },
-    {
-      number: "UP81 AA 5544",
-      driver: "Mohit",
-      speed: "0 km/h",
-      location: "Depot",
-    },
-  ];
-
-
-  const emergencyVehicles = [
-    {
-      number: "UP78 EF 5542",
-      driver: "Aman",
-      alert: "Accident Detected",
-      location: "Bareilly",
-    },
-  ];
+const emergencyVehicles = vehicles.filter(
+  (v) => v.Status === "Emergency"
+);
 
 
   return (
@@ -101,7 +68,7 @@ useEffect(() => {
           borderRadius:"10px",
           flex:1
         }}>
-          <h2>🚗 125</h2>
+         <h2>🚗 {vehicles.length}</h2>
           <p>Total Vehicles</p>
         </div>
 
@@ -112,7 +79,7 @@ useEffect(() => {
           borderRadius:"10px",
           flex:1
         }}>
-          <h2>🟢 98</h2>
+          <h2>🟢 {runningVehicles.length}</h2>
           <p>Running</p>
         </div>
 
@@ -123,7 +90,7 @@ useEffect(() => {
           borderRadius:"10px",
           flex:1
         }}>
-          <h2>🟡 22</h2>
+          <h2>🟡 {parkedVehicles.length}</h2>
           <p>Parked</p>
         </div>
 
@@ -134,7 +101,7 @@ useEffect(() => {
           borderRadius:"10",
           flex:1
         }}>
-          <h2>🔴 5</h2>
+          <h2>🔴 {emergencyVehicles.length}</h2>
           <p>Emergency</p>
         </div>
 
@@ -143,66 +110,62 @@ useEffect(() => {
         🟢 Running Vehicles
       </h2>
 
-      {runningVehicles.map((v, index) => (
-        <div
-          key={index}
-          style={{
-            background:"#166534",
-            padding:"15px",
-            margin:"10px 0",
-            borderRadius:"8px",
-          }}
-        >
-          🚗 {v.number} <br />
-          👤 Driver: {v.driver} <br />
-          ⚡ Speed: {v.speed} <br />
-          📍 Location: {v.location}
-        </div>
-      ))}
+{runningVehicles.map((v, index) => (
+  <div
+    key={index}
+    style={{
+      background: "#166534",
+      padding: "15px",
+      margin: "10px 0",
+      borderRadius: "8px",
+    }}
+  >
+    🚗 Vehicle No: {v.vehicleNumber} <br />
+    👤 Driver: {v.DriverName} <br />
+    👨 Owner: {v.OwnerName} <br />
+    🚙 Model: {v.VehicleModel} <br />
+    📱 Emergency Contact: {v.FamilyContact} <br />
+    🟢 Status: {v.Status}
+  </div>
+))}
 
-
-      <h2 style={{ marginTop: "35px" }}>
-        🟡 Parked Vehicles
-      </h2>
-
-      {parkedVehicles.map((v, index) => (
-        <div
-          key={index}
-          style={{
-            background:"#854d0e",
-            padding:"15px",
-            margin:"10px 0",
-            borderRadius:"8px",
-          }}
-        >
-          🚗 {v.number} <br />
-          👤 Driver: {v.driver} <br />
-          ⚡ Speed: {v.speed} <br />
-          📍 Location: {v.location}
-        </div>
-      ))}
-
-
-      <h2 style={{ marginTop: "35px" }}>
-        🔴 Emergency Vehicles
-      </h2>
+    {parkedVehicles.map((v, index) => (
+  <div
+    key={index}
+    style={{
+      background: "#854d0e",
+      padding: "15px",
+      margin: "10px 0",
+      borderRadius: "8px",
+    }}
+  >
+    🚗 Vehicle No: {v.vehicleNumber} <br />
+    👤 Driver: {v.DriverName} <br />
+    👨 Owner: {v.OwnerName} <br />
+    🚙 Model: {v.VehicleModel} <br />
+    📱 Emergency Contact: {v.FamilyContact} <br />
+    🟡 Status: {v.Status}
+  </div>
+))}
 
       {emergencyVehicles.map((v, index) => (
-        <div
-          key={index}
-          style={{
-            background:"#991b1b",
-            padding:"15px",
-            margin:"10px 0",
-            borderRadius:"8px",
-          }}
-        >
-          🚨 {v.number} <br />
-          👤 Driver: {v.driver} <br />
-          ⚠️ Alert: {v.alert} <br />
-          📍 Location: {v.location}
-        </div>
-      ))}
+  <div
+    key={index}
+    style={{
+      background: "#991b1b",
+      padding: "15px",
+      margin: "10px 0",
+      borderRadius: "8px",
+    }}
+  >
+    🚗 Vehicle No: {v.vehicleNumber} <br />
+    👤 Driver: {v.DriverName} <br />
+    👨 Owner: {v.OwnerName} <br />
+    🚙 Model: {v.VehicleModel} <br />
+    📱 Emergency Contact: {v.FamilyContact} <br />
+    🔴 Status: {v.Status}
+  </div>
+))}
 
 
       <h2 style={{ marginTop:"35px" }}>
