@@ -182,3 +182,125 @@
     border-right-color: var(--border);
   }
 }
+.summary-success-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #c9ead8;
+  border-radius: 12px;
+  background: #eefaf4;
+}
+
+.summary-success-box div {
+  text-align: center;
+}
+
+.summary-success-box span,
+.summary-grid span {
+  display: block;
+  color: #7b899b;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.summary-success-box strong {
+  display: block;
+  margin-top: 5px;
+  color: #148650;
+  font-size: 11px;
+}
+
+.summary-section {
+  margin-top: 25px;
+}
+
+.summary-section h2 {
+  margin-top: 5px;
+  margin-bottom: 13px;
+  color: #18263a;
+  font-size: 17px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.summary-grid div {
+  padding: 14px;
+  border: 1px solid #e1e7ef;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.summary-grid strong {
+  display: block;
+  margin-top: 6px;
+  color: #28374b;
+  font-size: 12px;
+}
+
+.summary-response-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.summary-response-list div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #e1e7ef;
+  border-radius: 9px;
+  background: #ffffff;
+}
+
+.summary-response-list div > span {
+  font-size: 20px;
+}
+
+.summary-response-list strong {
+  flex: 1;
+  color: #28374b;
+  font-size: 12px;
+}
+
+.summary-response-list b {
+  color: #148650;
+  font-size: 9px;
+}
+
+.summary-demo-message {
+  margin-top: 24px;
+  padding: 17px;
+  border-radius: 10px;
+  background: #f4f7fb;
+  border: 1px solid #e1e7ef;
+}
+
+.summary-demo-message strong {
+  color: #18263a;
+  font-size: 12px;
+}
+
+.summary-demo-message p {
+  margin-top: 6px;
+  color: #68778b;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+  .summary-success-box,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-response-list div {
+    flex-wrap: wrap;
+  }
+}
